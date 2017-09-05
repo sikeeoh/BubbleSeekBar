@@ -3,6 +3,8 @@ package com.xw.repo;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 
+import java.util.ArrayList;
+
 import static com.xw.repo.BubbleUtils.dp2px;
 import static com.xw.repo.BubbleUtils.sp2px;
 
@@ -46,6 +48,8 @@ public class BubbleConfigBuilder {
     boolean alwaysShowBubble;
     long alwaysShowBubbleDelay;
     boolean hideBubble;
+    boolean showSecondTrack;
+    ArrayList<String> sectionTextList;
 
     private BubbleSeekBar mBubbleSeekBar;
 
@@ -222,6 +226,21 @@ public class BubbleConfigBuilder {
         return this;
     }
 
+    public BubbleConfigBuilder showSecondTrack() {
+        this.showSecondTrack = true;
+        return this;
+    }
+
+    public BubbleConfigBuilder hideSecondTrack() {
+        this.showSecondTrack = false;
+        return this;
+    }
+
+    public BubbleConfigBuilder sectionTextList(ArrayList<String> sectionTextList) {
+        this.sectionTextList = sectionTextList;
+        return this;
+    }
+
     public float getMin() {
         return min;
     }
@@ -268,6 +287,10 @@ public class BubbleConfigBuilder {
 
     public int getSectionCount() {
         return sectionCount;
+    }
+
+    public int getAllSectionCount() {
+        return sectionCount + 2;
     }
 
     public boolean isShowSectionMark() {
@@ -346,7 +369,15 @@ public class BubbleConfigBuilder {
         return alwaysShowBubbleDelay;
     }
 
+    public boolean isShowSecondTrack() {
+        return showSecondTrack;
+    }
+
     public boolean isHideBubble() {
         return hideBubble;
+    }
+
+    public ArrayList<String> getSectionTextList() {
+        return sectionTextList;
     }
 }

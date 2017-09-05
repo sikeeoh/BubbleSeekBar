@@ -18,6 +18,7 @@
         <attr name="bsb_show_section_mark" format="boolean"/> <!--show demarcation points or not, default: false-->
         <attr name="bsb_auto_adjust_section_mark" format="boolean"/> <!--auto scroll to the nearest section_mark or not, default: false-->
         <attr name="bsb_show_section_text" format="boolean"/> <!--show section-text or not, default: false-->
+        <attr name="bsb_show_second_track" format="boolean"/>
         <attr name="bsb_section_text_size" format="dimension|reference"/> <!--text size of section-text, default: 14sp-->
         <attr name="bsb_section_text_color" format="color|reference"/> <!--text color of section-text, default: same as right-track's color-->
         <!--text position of section-text relative to track, sides, bottom_sides, below_section_mark, default: sides-->

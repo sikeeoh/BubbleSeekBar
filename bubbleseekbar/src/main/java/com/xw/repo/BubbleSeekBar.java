@@ -20,6 +20,7 @@ import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -33,6 +34,7 @@ import com.xw.repo.bubbleseekbar.R;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import static com.xw.repo.BubbleSeekBar.TextPosition.BELOW_SECTION_MARK;
 import static com.xw.repo.BubbleSeekBar.TextPosition.BOTTOM_SIDES;
@@ -45,6 +47,7 @@ import static com.xw.repo.BubbleUtils.sp2px;
  * appearing upon when seeking. Highly customizable, mostly demands has been considered.
  * <p>
  * Created by woxingxiao on 2016-10-27.
+ * Modified by sikeeoh on 2017-09-05.
  */
 public class BubbleSeekBar extends View {
 
@@ -71,6 +74,7 @@ public class BubbleSeekBar extends View {
     private boolean isShowSectionMark; // show demarcation points or not
     private boolean isAutoAdjustSectionMark; // auto scroll to the nearest section_mark or not
     private boolean isShowSectionText; // show section-text or not
+    private boolean isShowSecondTrack;
     private int mSectionTextSize; // text size of section-text
     private int mSectionTextColor; // text color of section-text
     @TextPosition
@@ -118,6 +122,7 @@ public class BubbleSeekBar extends View {
     private boolean isTouchToSeekAnimEnd = true;
     private float mPreSecValue; // previous SectionValue
     private BubbleConfigBuilder mConfigBuilder; // config attributes
+    private ArrayList<String> sectionTextList;
 
     public BubbleSeekBar(Context context) {
         this(context, null);
@@ -179,12 +184,14 @@ public class BubbleSeekBar extends View {
         duration = a.getInteger(R.styleable.BubbleSeekBar_bsb_always_show_bubble_delay, 0);
         mAlwaysShowBubbleDelay = duration <= 0 ? 200 : duration;
         isHideBubble = a.getBoolean(R.styleable.BubbleSeekBar_bsb_hide_bubble, false);
+        isShowSecondTrack = a.getBoolean(R.styleable.BubbleSeekBar_bsb_show_second_track, true);
         a.recycle();
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setTextAlign(Paint.Align.CENTER);
+        sectionTextList = new ArrayList<>();
 
         mRectText = new Rect();
         mTextSpace = dp2px(2);
@@ -472,7 +479,7 @@ public class BubbleSeekBar extends View {
 
             for (int i = 0; i <= mSectionCount; i++) {
                 x_ = xLeft + i * mSectionOffset;
-                mPaint.setColor(x_ <= junction ? mSecondTrackColor : mTrackColor);
+                mPaint.setColor(x_ <= junction ? (isShowSecondTrack ? mSecondTrackColor : mTrackColor) : mTrackColor);
                 // sectionMark
                 canvas.drawCircle(x_, yTop, r, mPaint);
 
@@ -483,11 +490,21 @@ public class BubbleSeekBar extends View {
                     if (mSectionTextInterval > 1) {
                         if (conditionInterval && i % mSectionTextInterval == 0) {
                             float m = mMin + mSectionValue * i;
-                            canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
+                            if (sectionTextList == null || sectionTextList.isEmpty()) {
+                                canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
+                            } else {
+                                String text = sectionTextList.size() - 1 < i ? "" : sectionTextList.get(i);
+                                canvas.drawText(TextUtils.isEmpty(text) ? "" : text, x_, y_, mPaint);
+                            }
                         }
                     } else {
                         float m = mMin + mSectionValue * i;
-                        canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
+                        if (sectionTextList == null || sectionTextList.isEmpty()) {
+                            canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
+                        } else {
+                            String text = sectionTextList.size() - 1 < i ? "" : sectionTextList.get(i);
+                            canvas.drawText(TextUtils.isEmpty(text) ? "" : text, x_, y_, mPaint);
+                        }
                     }
                 }
             }
@@ -513,8 +530,8 @@ public class BubbleSeekBar extends View {
         }
 
         // draw track
-        mPaint.setColor(mSecondTrackColor);
-        mPaint.setStrokeWidth(mSecondTrackSize);
+        mPaint.setColor(isShowSecondTrack ? mSecondTrackColor : mTrackColor);
+        mPaint.setStrokeWidth(isShowSecondTrack ? mSecondTrackSize : mTrackSize);
         canvas.drawLine(xLeft, yTop, mThumbCenterX, yTop, mPaint);
 
         // draw second track
@@ -977,7 +994,6 @@ public class BubbleSeekBar extends View {
                 }
             }
         }
-
         return Math.round(mProgress);
     }
 
@@ -1026,6 +1042,8 @@ public class BubbleSeekBar extends View {
         isAlwaysShowBubble = builder.alwaysShowBubble;
         mAlwaysShowBubbleDelay = builder.alwaysShowBubbleDelay;
         isHideBubble = builder.hideBubble;
+        isShowSecondTrack = builder.showSecondTrack;
+        sectionTextList = builder.sectionTextList;
 
         initConfigByPriority();
         calculateRadiusOfBubble();
@@ -1077,6 +1095,8 @@ public class BubbleSeekBar extends View {
         mConfigBuilder.alwaysShowBubble = isAlwaysShowBubble;
         mConfigBuilder.alwaysShowBubbleDelay = mAlwaysShowBubbleDelay;
         mConfigBuilder.hideBubble = isHideBubble;
+        mConfigBuilder.showSecondTrack = isShowSecondTrack;
+        mConfigBuilder.sectionTextList = sectionTextList;
 
         return mConfigBuilder;
     }
