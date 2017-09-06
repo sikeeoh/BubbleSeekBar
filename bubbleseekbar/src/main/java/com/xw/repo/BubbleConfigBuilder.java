@@ -3,6 +3,8 @@ package com.xw.repo;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 
+import java.util.Map;
+
 import static com.xw.repo.BubbleUtils.dp2px;
 import static com.xw.repo.BubbleUtils.sp2px;
 
@@ -46,6 +48,10 @@ public class BubbleConfigBuilder {
     boolean alwaysShowBubble;
     long alwaysShowBubbleDelay;
     boolean hideBubble;
+    boolean showSecondTrack;
+    Map<Integer, String> sectionTextMap;
+    @BubbleSeekBar.SectionTextShowSetting
+    int sectionTextShowSetting;
 
     private BubbleSeekBar mBubbleSeekBar;
 
@@ -152,6 +158,11 @@ public class BubbleConfigBuilder {
         return this;
     }
 
+    public BubbleConfigBuilder sectionTextShowSetting(@BubbleSeekBar.SectionTextShowSetting int setting) {
+        this.sectionTextShowSetting = setting;
+        return this;
+    }
+
     public BubbleConfigBuilder sectionTextInterval(@IntRange(from = 1) int interval) {
         this.sectionTextInterval = interval;
         return this;
@@ -222,6 +233,21 @@ public class BubbleConfigBuilder {
         return this;
     }
 
+    public BubbleConfigBuilder showSecondTrack() {
+        this.showSecondTrack = true;
+        return this;
+    }
+
+    public BubbleConfigBuilder hideSecondTrack() {
+        this.showSecondTrack = false;
+        return this;
+    }
+
+    public BubbleConfigBuilder sectionTextMap(Map<Integer, String> sectionTextMap) {
+        this.sectionTextMap = sectionTextMap;
+        return this;
+    }
+
     public float getMin() {
         return min;
     }
@@ -270,6 +296,10 @@ public class BubbleConfigBuilder {
         return sectionCount;
     }
 
+    public int getAllSectionCount() {
+        return sectionCount + 2;
+    }
+
     public boolean isShowSectionMark() {
         return showSectionMark;
     }
@@ -292,6 +322,10 @@ public class BubbleConfigBuilder {
 
     public int getSectionTextPosition() {
         return sectionTextPosition;
+    }
+
+    public int getSectionTextShowSetting() {
+        return sectionTextShowSetting;
     }
 
     public int getSectionTextInterval() {
@@ -346,7 +380,15 @@ public class BubbleConfigBuilder {
         return alwaysShowBubbleDelay;
     }
 
+    public boolean isShowSecondTrack() {
+        return showSecondTrack;
+    }
+
     public boolean isHideBubble() {
         return hideBubble;
+    }
+
+    public Map<Integer, String> getSectionTextMap() {
+        return sectionTextMap;
     }
 }

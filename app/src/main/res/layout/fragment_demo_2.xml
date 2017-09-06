@@ -17,9 +17,11 @@
         android:layout_width="match_parent"
         android:layout_height="16dp"
         android:layout_marginTop="8dp"
+        app:bsb_show_second_track="false"
         app:bsb_show_section_mark="true"
         app:bsb_show_section_text="true"
-        app:bsb_show_thumb_text="true"/>
+        app:bsb_section_text_position="below_section_mark"
+        app:bsb_show_thumb_text="false"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,4 +87,24 @@
         app:bsb_show_thumb_text="true"
         app:bsb_thumb_text_size="18sp"
         app:bsb_touch_to_seek="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="custom section data"
+        android:textSize="12sp"/>
+
+    <com.xw.repo.BubbleSeekBar
+        android:id="@+id/bsb_custom_section_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:bsb_second_track_color="@color/color_blue"
+        app:bsb_section_count="5"
+        app:bsb_section_text_position="below_section_mark"
+        app:bsb_show_section_mark="true"
+        app:bsb_show_section_text="true"
+        app:bsb_show_thumb_text="true"
+        app:bsb_thumb_text_size="15sp" />
 </LinearLayout>
