@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def VERSION_NAME = "3.6"
+def VERSION_NAME = "3.7.1"
 
 android {
     compileSdkVersion 26
@@ -28,10 +28,10 @@ dependencies {
 
 apply plugin: 'com.novoda.bintray-release'
 publish {
-    userOrg = 'woxingxiao'
-    groupId = 'com.xw.repo'
+    userOrg = 'sikeeoh'
+    groupId = 'com.sikeeoh.repo'
     artifactId = 'bubbleseekbar'
     publishVersion = VERSION_NAME
     desc = 'A beautiful Android custom seekbar, which has a bubble view with progress appearing upon when seeking.'
-    website = 'https://github.com/woxingxiao/BubbleSeekBar'
+    website = 'https://github.com/sikeeoh/BubbleSeekBar'
 }

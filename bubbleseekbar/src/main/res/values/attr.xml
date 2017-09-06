@@ -18,7 +18,7 @@
         <attr name="bsb_show_section_mark" format="boolean"/> <!--show demarcation points or not, default: false-->
         <attr name="bsb_auto_adjust_section_mark" format="boolean"/> <!--auto scroll to the nearest section_mark or not, default: false-->
         <attr name="bsb_show_section_text" format="boolean"/> <!--show section-text or not, default: false-->
-        <attr name="bsb_show_second_track" format="boolean"/>
+        <attr name="bsb_show_second_track" format="boolean"/> <!--show second-track or not, default: true-->
         <attr name="bsb_section_text_size" format="dimension|reference"/> <!--text size of section-text, default: 14sp-->
         <attr name="bsb_section_text_color" format="color|reference"/> <!--text color of section-text, default: same as right-track's color-->
         <!--text position of section-text relative to track, sides, bottom_sides, below_section_mark, default: sides-->
@@ -27,7 +27,8 @@
             <enum name="bottom_sides" value="1"/>
             <enum name="below_section_mark" value="2"/>
         </attr>
-
+        <!-- the string shown according to the section text attribute are different.
+         If you do not use this option, the entire data will be displayed. default: NONE  -->
         <attr name="bsb_section_text_show_setting">
             <enum name="only_default" value="0"/>
             <enum name="only_custom" value="1"/>

@@ -20,6 +20,7 @@ import java.util.HashMap;
 public class DemoFragment2 extends Fragment {
     private HashMap<Integer, String> sectionTextMap;
     private BubbleSeekBar bubbleSeekBar;
+    private BubbleSeekBar bubbleSeekBar2;
 
     public static DemoFragment2 newInstance() {
         return new DemoFragment2();
@@ -33,11 +34,13 @@ public class DemoFragment2 extends Fragment {
         initData();
 
         bubbleSeekBar.getConfigBuilder().sectionTextMap(sectionTextMap).build();
+        bubbleSeekBar2.getConfigBuilder().sectionTextMap(sectionTextMap).build();
         return view;
     }
 
     private void initViews(View view) {
         bubbleSeekBar = (BubbleSeekBar)view.findViewById(R.id.bsb_custom_section_data);
+        bubbleSeekBar2 = (BubbleSeekBar)view.findViewById(R.id.bsb_custom_section_data_only_show_custom);
     }
 
     private void initData() {

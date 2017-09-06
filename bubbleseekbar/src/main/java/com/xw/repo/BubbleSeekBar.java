@@ -50,7 +50,7 @@ import static com.xw.repo.BubbleUtils.sp2px;
  * appearing upon when seeking. Highly customizable, mostly demands has been considered.
  * <p>
  * Created by woxingxiao on 2016-10-27.
- * Modified by sikeeoh on 2017-09-05.
+ * Modified by sikeeoh
  */
 public class BubbleSeekBar extends View {
 
@@ -183,7 +183,7 @@ public class BubbleSeekBar extends View {
         int setting = a.getInteger(R.styleable.BubbleSeekBar_bsb_section_text_show_setting, NONE);
         if (setting == 0) {
             mThumbTextShowSetting = SectionTextShowSetting.ONLY_DEFAULT;
-        } else if (pos == 1) {
+        } else if (setting == 1) {
             mThumbTextShowSetting = SectionTextShowSetting.ONLY_CUSTOM;
         } else {
             mThumbTextShowSetting = NONE;

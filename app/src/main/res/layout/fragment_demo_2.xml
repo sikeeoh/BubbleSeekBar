@@ -26,7 +26,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="section text position : bottom_sides, show progress in float"/>
 
     <com.xw.repo.BubbleSeekBar
@@ -50,7 +50,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="section text position: below_section_mark, auto adjust section mark"
         android:textSize="12sp"/>
 
@@ -70,7 +70,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="touch to seek, auto adjust"
         android:textSize="12sp"/>
 
@@ -91,8 +91,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="custom section data"
+        android:layout_marginTop="8dp"
+        android:text="custom section data(3.7.1 new Feature)"
         android:textSize="12sp"/>
 
     <com.xw.repo.BubbleSeekBar
@@ -103,6 +103,27 @@
         app:bsb_second_track_color="@color/color_blue"
         app:bsb_section_count="5"
         app:bsb_section_text_position="below_section_mark"
+        app:bsb_show_section_mark="true"
+        app:bsb_show_section_text="true"
+        app:bsb_show_thumb_text="true"
+        app:bsb_thumb_text_size="15sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="show only custom section data(3.7.1 new Feature)"
+        android:textSize="12sp"/>
+
+    <com.xw.repo.BubbleSeekBar
+        android:id="@+id/bsb_custom_section_data_only_show_custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:bsb_second_track_color="@color/color_blue"
+        app:bsb_section_count="5"
+        app:bsb_section_text_position="below_section_mark"
+        app:bsb_section_text_show_setting="only_custom"
         app:bsb_show_section_mark="true"
         app:bsb_show_section_text="true"
         app:bsb_show_thumb_text="true"

@@ -31,6 +31,7 @@ public class DemoFragment3 extends Fragment {
         BubbleSeekBar bubbleSeekBar2 = (BubbleSeekBar) view.findViewById(R.id.demo_3_seek_bar_2);
         BubbleSeekBar bubbleSeekBar3 = (BubbleSeekBar) view.findViewById(R.id.demo_3_seek_bar_3);
         BubbleSeekBar bubbleSeekBar4 = (BubbleSeekBar) view.findViewById(R.id.demo_3_seek_bar_4);
+        BubbleSeekBar bubbleSeekBar5 = (BubbleSeekBar) view.findViewById(R.id.demo_3_seek_bar_5);
 
         bubbleSeekBar1.getConfigBuilder()
                 .min(0)
@@ -86,6 +87,16 @@ public class DemoFragment3 extends Fragment {
                 .showSectionText()
                 .sectionTextPosition(BubbleSeekBar.TextPosition.BELOW_SECTION_MARK)
                 .autoAdjustSectionMark()
+                .build();
+
+        bubbleSeekBar5.getConfigBuilder()
+                .min(0)
+                .max(100)
+                .progress(0)
+                .sectionCount(10)
+                .showSectionText()
+                .hideSecondTrack()
+                .sectionTextPosition(BubbleSeekBar.TextPosition.BELOW_SECTION_MARK)
                 .build();
 
         return view;

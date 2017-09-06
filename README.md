@@ -1,36 +1,46 @@
-[![Download](https://api.bintray.com/packages/woxingxiao/maven/bubbleseekbar/images/download.svg?version=3.6)](https://bintray.com/woxingxiao/maven/bubbleseekbar/3.0/link)
-[![Download](https://api.bintray.com/packages/woxingxiao/maven/bubbleseekbar/images/download.svg?version=3.6-lite)](https://bintray.com/woxingxiao/maven/bubbleseekbar/3.0-lite/link)
+[![Download](https://api.bintray.com/packages/sikeeoh/maven/bubbleseekbar/images/download.svg?version=3.7.1)](https://bintray.com/sikeeoh/maven/bubbleseekbar)
 [![License](http://img.shields.io/badge/License-Apache%202.0-brightgreen.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 
-[**中文说明**](https://github.com/woxingxiao/BubbleSeekBar/blob/master/README_zh.md)
+# BubbleSeekBar for Android Renewal!
+
+
+### This project is a fork of woxingxiao/BubbleSeekBar project.
+The project provides flexibility in customization in addition to adding brand new features listed below
+
+* Support custom section text 
+	* sectionTextMap (java)
+* Support second track visibility
+	* bsb\_show\_second\_track (xml)
+	* showSecondTrack (java)
+	* hideSecondTrack (java)
+* The string shown according to the section text attribute are different.
+	* bsb\_section\_text\_show\_setting (xml)
+	* sectionTextShowSetting(BubbleSeekBar.SectionTextShowSetting.ONLY\_CUSTOM) (java)
+
+## Introduce
 
 **A beautiful Android custom seek bar, which has a bubble view with progress appearing upon when seeking. Highly customizable, mostly demands has been considered. `star` or `pull request` will be welcomed**
 ****
 ## Screenshot
-![demo1](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo1.gif)
-![demo2](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo2.gif)
+![demo1](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo1.gif)
+![demo2](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo2.gif)
 ******
-![demo3](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo3.gif)
-![demo4](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo4.gif)
+![demo3](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo3.gif)
+![demo4](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo4.gif)
 
 ## Download
-The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/woxingxiao/maven/bubbleseekbar/images/download.svg)](https://bintray.com/woxingxiao/maven/bubbleseekbar/_latestVersion)
-```groovy
-  dependencies {
-     // lite version (recommended)
-     // e.g. compile 'com.xw.repo:bubbleseekbar:3.6-lite'
-        compile 'com.xw.repo:bubbleseekbar:${LATEST_VERSION}-lite'
+The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/sikeeoh/maven/bubbleseekbar/images/download.svg)](https://bintray.com/sikeeoh/maven/bubbleseekbar)
 
-     // enhanced version
-     // e.g. compile 'com.xw.repo:bubbleseekbar:3.6'
-     // compile 'com.xw.repo:bubbleseekbar:${LATEST_VERSION}'
+```
+  dependencies {
+     // compile 'com.sikeeoh.repo:bubbleseekbar:${LATEST_VERSION}'
   }
 ```
 
 ## Usage  
 ### xml  
 ```xml
-<com.xw.repo.BubbleSeekBar
+<com.sikeeoh.repo.BubbleSeekBar
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
@@ -46,10 +56,11 @@ The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/woxingxiao
     app:bsb_show_section_mark="true"
     app:bsb_show_section_text="true"
     app:bsb_show_thumb_text="true"
+    app:bsb_section_text_show_setting="only_default"
     app:bsb_track_color="@color/color_red_light"/>
 ```
 ```xml
-<com.xw.repo.BubbleSeekBar
+<com.sikeeoh.repo.BubbleSeekBar
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
@@ -59,11 +70,12 @@ The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/woxingxiao
     app:bsb_section_text_position="below_section_mark"
     app:bsb_show_section_mark="true"
     app:bsb_show_section_text="true"
+    app:bsb_section_text_show_setting="only_custom"
     app:bsb_show_thumb_text="true"
     app:bsb_thumb_text_size="18sp"
     app:bsb_touch_to_seek="true"/>
 ```
-### java (not for **_lite_** version)
+### java
 ```java
 mBbubbleSeekBar.getConfigBuilder()
                .min(0.0)
@@ -84,19 +96,18 @@ mBbubbleSeekBar.getConfigBuilder()
                .showSectionMark()
                .seekBySection()
                .autoAdjustSectionMark()
+               .hideSecondTrack()
+               .sectionTextMap(sectionTextMap)
                .sectionTextPosition(BubbleSeekBar.TextPosition.BELOW_SECTION_MARK)
                .build();
 ```
-Check out the demo for more details. Or download the apk: [**sample.apk**](https://github.com/woxingxiao/BubbleSeekBar/raw/master/apk/sample.apk)
+Check out the demo for more details. Or download the apk: [**sample.apk**](https://github.com/sikeeoh/BubbleSeekBar/raw/master/apk/sample.apk)
 ## Attentions  
 - There are two versions of this library.The differences as follow:  
 
   version | init | getter/setter
   -------- | ---|---
-  lite|xml|min, max, progress
-  enhanced|xml, java|all attrs
-
-  **_lite_** version is recommended.
+  LATEST_VERSION |xml, java|all attrs
 
 - You must correct the offsets by setting `ScrollListener` when `BubbleSeekBar`'s parent view is scrollable, otherwise the position of bubble appears maybe be wrong. For example:
 ```java
@@ -130,6 +141,7 @@ Check out the demo for more details. Or download the apk: [**sample.apk**](https
 <attr name="bsb_show_section_mark" format="boolean"/> <!--show demarcation points or not, default: false-->
 <attr name="bsb_auto_adjust_section_mark" format="boolean"/> <!--auto scroll to the nearest section_mark or not, default: false-->
 <attr name="bsb_show_section_text" format="boolean"/> <!--show section-text or not, default: false-->
+<attr name="bsb_show_second_track" format="boolean"/> <!--show second-track or not, default: true-->
 <attr name="bsb_section_text_size" format="dimension|reference"/> <!--text size of section-text, default: 14sp-->
 <attr name="bsb_section_text_color" format="color|reference"/> <!--text color of section-text, default: same as right-track's color-->
 <!--text position of section-text relative to track, sides, bottom_sides, below_section_mark, default: sides-->
@@ -137,6 +149,12 @@ Check out the demo for more details. Or download the apk: [**sample.apk**](https
     <enum name="sides" value="0"/>
     <enum name="bottom_sides" value="1"/>
     <enum name="below_section_mark" value="2"/>
+</attr>
+<!-- the string shown according to the section text attribute are different.
+If you do not use this option, the entire data will be displayed. default: NONE  -->
+<attr name="bsb_section_text_show_setting">
+	<enum name="only_default" value="0"/>
+	<enum name="only_custom" value="1"/>
 </attr>
 <attr name="bsb_section_text_interval" format="integer"/> <!--the interval of two section-text, default: 1-->
 <attr name="bsb_show_thumb_text" format="boolean"/> <!--show real time progress-text under thumb or not, default: false-->
@@ -152,17 +170,18 @@ Check out the demo for more details. Or download the apk: [**sample.apk**](https
 ```
 ## License
 ```
-   Copyright 2017 woxingxiao
+	Copyright 2016 woxingxiao
+  	Copyright 2017 sikeeoh
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+  	Licensed under the Apache License, Version 2.0 (the "License");
+  	you may not use this file except in compliance with the License.
+  	You may obtain a copy of the License at
 
      http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+  	Unless required by applicable law or agreed to in writing, software
+  	distributed under the License is distributed on an "AS IS" BASIS,
+  	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  	See the License for the specific language governing permissions and
+  	limitations under the License.
 ```
