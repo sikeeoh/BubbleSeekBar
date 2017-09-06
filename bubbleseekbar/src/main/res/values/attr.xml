@@ -27,6 +27,12 @@
             <enum name="bottom_sides" value="1"/>
             <enum name="below_section_mark" value="2"/>
         </attr>
+
+        <attr name="bsb_section_text_show_setting">
+            <enum name="only_default" value="0"/>
+            <enum name="only_custom" value="1"/>
+        </attr>
+
         <attr name="bsb_section_text_interval" format="integer"/> <!--the interval of two section-text, default: 1-->
         <attr name="bsb_show_thumb_text" format="boolean"/> <!--show real time progress-text under thumb or not, default: false-->
         <attr name="bsb_thumb_text_size" format="dimension|reference"/> <!--text size of progress-text, default: 14sp-->

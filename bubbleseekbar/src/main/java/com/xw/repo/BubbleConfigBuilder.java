@@ -3,7 +3,7 @@ package com.xw.repo;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 import static com.xw.repo.BubbleUtils.dp2px;
 import static com.xw.repo.BubbleUtils.sp2px;
@@ -49,7 +49,9 @@ public class BubbleConfigBuilder {
     long alwaysShowBubbleDelay;
     boolean hideBubble;
     boolean showSecondTrack;
-    ArrayList<String> sectionTextList;
+    Map<Integer, String> sectionTextMap;
+    @BubbleSeekBar.SectionTextShowSetting
+    int sectionTextShowSetting;
 
     private BubbleSeekBar mBubbleSeekBar;
 
@@ -156,6 +158,11 @@ public class BubbleConfigBuilder {
         return this;
     }
 
+    public BubbleConfigBuilder sectionTextShowSetting(@BubbleSeekBar.SectionTextShowSetting int setting) {
+        this.sectionTextShowSetting = setting;
+        return this;
+    }
+
     public BubbleConfigBuilder sectionTextInterval(@IntRange(from = 1) int interval) {
         this.sectionTextInterval = interval;
         return this;
@@ -236,8 +243,8 @@ public class BubbleConfigBuilder {
         return this;
     }
 
-    public BubbleConfigBuilder sectionTextList(ArrayList<String> sectionTextList) {
-        this.sectionTextList = sectionTextList;
+    public BubbleConfigBuilder sectionTextMap(Map<Integer, String> sectionTextMap) {
+        this.sectionTextMap = sectionTextMap;
         return this;
     }
 
@@ -317,6 +324,10 @@ public class BubbleConfigBuilder {
         return sectionTextPosition;
     }
 
+    public int getSectionTextShowSetting() {
+        return sectionTextShowSetting;
+    }
+
     public int getSectionTextInterval() {
         return sectionTextInterval;
     }
@@ -377,7 +388,7 @@ public class BubbleConfigBuilder {
         return hideBubble;
     }
 
-    public ArrayList<String> getSectionTextList() {
-        return sectionTextList;
+    public Map<Integer, String> getSectionTextMap() {
+        return sectionTextMap;
     }
 }

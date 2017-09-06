@@ -34,8 +34,11 @@ import com.xw.repo.bubbleseekbar.R;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import static com.xw.repo.BubbleSeekBar.SectionTextShowSetting.ONLY_CUSTOM;
+import static com.xw.repo.BubbleSeekBar.SectionTextShowSetting.ONLY_DEFAULT;
 import static com.xw.repo.BubbleSeekBar.TextPosition.BELOW_SECTION_MARK;
 import static com.xw.repo.BubbleSeekBar.TextPosition.BOTTOM_SIDES;
 import static com.xw.repo.BubbleSeekBar.TextPosition.SIDES;
@@ -57,6 +60,12 @@ public class BubbleSeekBar extends View {
     @Retention(RetentionPolicy.SOURCE)
     public @interface TextPosition {
         int SIDES = 0, BOTTOM_SIDES = 1, BELOW_SECTION_MARK = 2;
+    }
+
+    @IntDef({NONE, ONLY_DEFAULT, ONLY_CUSTOM})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SectionTextShowSetting {
+        int ONLY_DEFAULT = 0, ONLY_CUSTOM = 1;
     }
 
     private float mMin; // min
@@ -122,7 +131,10 @@ public class BubbleSeekBar extends View {
     private boolean isTouchToSeekAnimEnd = true;
     private float mPreSecValue; // previous SectionValue
     private BubbleConfigBuilder mConfigBuilder; // config attributes
-    private ArrayList<String> sectionTextList;
+    private Map<Integer, String> sectionTextMap;
+    private Map<Integer, Integer> sectionXPositionMap;
+    @SectionTextShowSetting
+    private int mThumbTextShowSetting = NONE;
 
     public BubbleSeekBar(Context context) {
         this(context, null);
@@ -167,6 +179,15 @@ public class BubbleSeekBar extends View {
         } else {
             mSectionTextPosition = NONE;
         }
+
+        int setting = a.getInteger(R.styleable.BubbleSeekBar_bsb_section_text_show_setting, NONE);
+        if (setting == 0) {
+            mThumbTextShowSetting = SectionTextShowSetting.ONLY_DEFAULT;
+        } else if (pos == 1) {
+            mThumbTextShowSetting = SectionTextShowSetting.ONLY_CUSTOM;
+        } else {
+            mThumbTextShowSetting = NONE;
+        }
         mSectionTextInterval = a.getInteger(R.styleable.BubbleSeekBar_bsb_section_text_interval, 1);
         isShowThumbText = a.getBoolean(R.styleable.BubbleSeekBar_bsb_show_thumb_text, false);
         mThumbTextSize = a.getDimensionPixelSize(R.styleable.BubbleSeekBar_bsb_thumb_text_size, sp2px(14));
@@ -191,7 +212,8 @@ public class BubbleSeekBar extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setTextAlign(Paint.Align.CENTER);
-        sectionTextList = new ArrayList<>();
+        sectionTextMap = new HashMap<>();
+        sectionXPositionMap = new HashMap<>();
 
         mRectText = new Rect();
         mTextSpace = dp2px(2);
@@ -248,9 +270,7 @@ public class BubbleSeekBar extends View {
         if (isFloatType) {
             isShowProgressInFloat = true;
         }
-        if (mSectionTextPosition != NONE) {
-            isShowSectionText = true;
-        }
+
         if (isShowSectionText) {
             if (mSectionTextPosition == NONE) {
                 mSectionTextPosition = TextPosition.SIDES;
@@ -476,7 +496,7 @@ public class BubbleSeekBar extends View {
 
             float x_;
             float y_ = yTop + mRectText.height() + mThumbRadiusOnDragging + mTextSpace;
-
+            sectionXPositionMap.clear();
             for (int i = 0; i <= mSectionCount; i++) {
                 x_ = xLeft + i * mSectionOffset;
                 mPaint.setColor(x_ <= junction ? (isShowSecondTrack ? mSecondTrackColor : mTrackColor) : mTrackColor);
@@ -486,26 +506,34 @@ public class BubbleSeekBar extends View {
                 // sectionText belows section
                 if (isShowTextBelowSectionMark) {
                     mPaint.setColor(mSectionTextColor);
+                    int mapPosition = i + 1;
 
                     if (mSectionTextInterval > 1) {
                         if (conditionInterval && i % mSectionTextInterval == 0) {
                             float m = mMin + mSectionValue * i;
-                            if (sectionTextList == null || sectionTextList.isEmpty()) {
+                            if (mThumbTextShowSetting == NONE) {
+                                String text = sectionTextMap == null || sectionTextMap.get(mapPosition) == null ? (isFloatType ? float2String(m) : (int) m + "") : sectionTextMap.get(mapPosition);
+                                canvas.drawText(text, x_, y_, mPaint);
+                            } else if (mThumbTextShowSetting == ONLY_DEFAULT) {
                                 canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
                             } else {
-                                String text = sectionTextList.size() - 1 < i ? "" : sectionTextList.get(i);
+                                String text = sectionTextMap == null || sectionTextMap.get(mapPosition) == null ? "" : sectionTextMap.get(mapPosition);
                                 canvas.drawText(TextUtils.isEmpty(text) ? "" : text, x_, y_, mPaint);
                             }
                         }
                     } else {
                         float m = mMin + mSectionValue * i;
-                        if (sectionTextList == null || sectionTextList.isEmpty()) {
+                        if (mThumbTextShowSetting == NONE) {
+                            String text = sectionTextMap == null || sectionTextMap.get(mapPosition) == null ? (isFloatType ? float2String(m) : (int) m + "") : sectionTextMap.get(mapPosition);
+                            canvas.drawText(text, x_, y_, mPaint);
+                        } else if (mThumbTextShowSetting == ONLY_DEFAULT) {
                             canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
                         } else {
-                            String text = sectionTextList.size() - 1 < i ? "" : sectionTextList.get(i);
+                            String text = sectionTextMap == null || sectionTextMap.get(mapPosition) == null ? "" : sectionTextMap.get(mapPosition);
                             canvas.drawText(TextUtils.isEmpty(text) ? "" : text, x_, y_, mPaint);
                         }
                     }
+                    sectionXPositionMap.put((Math.round(x_ / 10) * 10), mapPosition);
                 }
             }
         }
@@ -523,9 +551,22 @@ public class BubbleSeekBar extends View {
 
             if (isFloatType || (isShowProgressInFloat && mSectionTextPosition == TextPosition.BOTTOM_SIDES &&
                     mProgress != mMin && mProgress != mMax)) {
-                canvas.drawText(String.valueOf(getProgressFloat()), mThumbCenterX, y_, mPaint);
+
+                Integer sectionPosition = sectionXPositionMap.get((Math.round(mThumbCenterX / 10) * 10));
+                if (sectionPosition == null) {
+                    canvas.drawText(String.valueOf(getProgressFloat()), mThumbCenterX, y_, mPaint);
+                } else {
+                    String text = sectionTextMap == null || sectionTextMap.get(sectionPosition) == null ? String.valueOf(getProgressFloat()) : sectionTextMap.get(sectionPosition);
+                    canvas.drawText(text, mThumbCenterX, y_, mPaint);
+                }
             } else {
-                canvas.drawText(String.valueOf(getProgress()), mThumbCenterX, y_, mPaint);
+                Integer sectionPosition = sectionXPositionMap.get((Math.round(mThumbCenterX / 10) * 10));
+                if (sectionPosition == null) {
+                    canvas.drawText(String.valueOf(getProgress()), mThumbCenterX, y_, mPaint);
+                } else {
+                    String text = sectionTextMap == null || sectionTextMap.get(sectionPosition) == null ? String.valueOf(getProgress()) : sectionTextMap.get(sectionPosition);
+                    canvas.drawText(text, mThumbCenterX, y_, mPaint);
+                }
             }
         }
 
@@ -1043,7 +1084,7 @@ public class BubbleSeekBar extends View {
         mAlwaysShowBubbleDelay = builder.alwaysShowBubbleDelay;
         isHideBubble = builder.hideBubble;
         isShowSecondTrack = builder.showSecondTrack;
-        sectionTextList = builder.sectionTextList;
+        sectionTextMap = builder.sectionTextMap;
 
         initConfigByPriority();
         calculateRadiusOfBubble();
@@ -1096,7 +1137,7 @@ public class BubbleSeekBar extends View {
         mConfigBuilder.alwaysShowBubbleDelay = mAlwaysShowBubbleDelay;
         mConfigBuilder.hideBubble = isHideBubble;
         mConfigBuilder.showSecondTrack = isShowSecondTrack;
-        mConfigBuilder.sectionTextList = sectionTextList;
+        mConfigBuilder.sectionTextMap = sectionTextMap;
 
         return mConfigBuilder;
     }
