@@ -22,11 +22,11 @@ The project provides flexibility in customization in addition to adding brand ne
 **A beautiful Android custom seek bar, which has a bubble view with progress appearing upon when seeking. Highly customizable, mostly demands has been considered. `star` or `pull request` will be welcomed**
 ****
 ## Screenshot
-![demo1](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo1.gif)
-![demo2](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo2.gif)
+![demo1](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo1.gif){:height="50%" width="50%"}
+![demo2](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo2.gif){:height="50%" width="50%"}
 ******
-![demo3](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo3.gif)
-![demo4](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo4.gif)
+![demo3](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo3.gif){:height="50%" width="50%"}
+![demo4](https://github.com/sikeeoh/BubbleSeekBar/blob/master/screenshot/demo4.gif){:height="50%" width="50%"}
 
 ## Download
 The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/sikeeoh/maven/bubbleseekbar/images/download.svg)](https://bintray.com/sikeeoh/maven/bubbleseekbar)
