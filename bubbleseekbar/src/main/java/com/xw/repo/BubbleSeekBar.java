@@ -37,8 +37,9 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.xw.repo.BubbleSeekBar.SectionTextShowSetting.ONLY_CUSTOM;
-import static com.xw.repo.BubbleSeekBar.SectionTextShowSetting.ONLY_DEFAULT;
+import static com.xw.repo.BubbleSeekBar.SectionTextShowOnlyCertainValues.ALL;
+import static com.xw.repo.BubbleSeekBar.SectionTextShowOnlyCertainValues.ONLY_CUSTOM;
+import static com.xw.repo.BubbleSeekBar.SectionTextShowOnlyCertainValues.ONLY_DEFAULT;
 import static com.xw.repo.BubbleSeekBar.TextPosition.BELOW_SECTION_MARK;
 import static com.xw.repo.BubbleSeekBar.TextPosition.BOTTOM_SIDES;
 import static com.xw.repo.BubbleSeekBar.TextPosition.SIDES;
@@ -62,10 +63,10 @@ public class BubbleSeekBar extends View {
         int SIDES = 0, BOTTOM_SIDES = 1, BELOW_SECTION_MARK = 2;
     }
 
-    @IntDef({NONE, ONLY_DEFAULT, ONLY_CUSTOM})
+    @IntDef({NONE, ALL, ONLY_DEFAULT, ONLY_CUSTOM})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface SectionTextShowSetting {
-        int ONLY_DEFAULT = 0, ONLY_CUSTOM = 1;
+    public @interface SectionTextShowOnlyCertainValues {
+        int ALL = 0, ONLY_DEFAULT = 1, ONLY_CUSTOM = 2;
     }
 
     private float mMin; // min
@@ -133,8 +134,8 @@ public class BubbleSeekBar extends View {
     private BubbleConfigBuilder mConfigBuilder; // config attributes
     private Map<Integer, String> sectionTextMap;
     private Map<Integer, Integer> sectionXPositionMap;
-    @SectionTextShowSetting
-    private int mThumbTextShowSetting = NONE;
+    @SectionTextShowOnlyCertainValues
+    private int mSectionTextShowOnlyCertainValues = NONE;
 
     public BubbleSeekBar(Context context) {
         this(context, null);
@@ -180,13 +181,15 @@ public class BubbleSeekBar extends View {
             mSectionTextPosition = NONE;
         }
 
-        int setting = a.getInteger(R.styleable.BubbleSeekBar_bsb_section_text_show_setting, NONE);
+        int setting = a.getInteger(R.styleable.BubbleSeekBar_bsb_section_text_show_only_certain_values, NONE);
         if (setting == 0) {
-            mThumbTextShowSetting = SectionTextShowSetting.ONLY_DEFAULT;
+            mSectionTextShowOnlyCertainValues = SectionTextShowOnlyCertainValues.ALL;
         } else if (setting == 1) {
-            mThumbTextShowSetting = SectionTextShowSetting.ONLY_CUSTOM;
+            mSectionTextShowOnlyCertainValues = SectionTextShowOnlyCertainValues.ONLY_DEFAULT;
+        } else if (setting == 2) {
+            mSectionTextShowOnlyCertainValues = SectionTextShowOnlyCertainValues.ONLY_CUSTOM;
         } else {
-            mThumbTextShowSetting = NONE;
+            mSectionTextShowOnlyCertainValues = NONE;
         }
         mSectionTextInterval = a.getInteger(R.styleable.BubbleSeekBar_bsb_section_text_interval, 1);
         isShowThumbText = a.getBoolean(R.styleable.BubbleSeekBar_bsb_show_thumb_text, false);
@@ -511,24 +514,24 @@ public class BubbleSeekBar extends View {
                     if (mSectionTextInterval > 1) {
                         if (conditionInterval && i % mSectionTextInterval == 0) {
                             float m = mMin + mSectionValue * i;
-                            if (mThumbTextShowSetting == NONE) {
+                            if (mSectionTextShowOnlyCertainValues == NONE || mSectionTextShowOnlyCertainValues == ALL) {
                                 String text = sectionTextMap == null || sectionTextMap.get(mapPosition) == null ? (isFloatType ? float2String(m) : (int) m + "") : sectionTextMap.get(mapPosition);
                                 canvas.drawText(text, x_, y_, mPaint);
-                            } else if (mThumbTextShowSetting == ONLY_DEFAULT) {
+                            } else if (mSectionTextShowOnlyCertainValues == ONLY_DEFAULT) {
                                 canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
-                            } else {
+                            } else if (mSectionTextShowOnlyCertainValues == ONLY_CUSTOM) {
                                 String text = sectionTextMap == null || sectionTextMap.get(mapPosition) == null ? "" : sectionTextMap.get(mapPosition);
                                 canvas.drawText(TextUtils.isEmpty(text) ? "" : text, x_, y_, mPaint);
                             }
                         }
                     } else {
                         float m = mMin + mSectionValue * i;
-                        if (mThumbTextShowSetting == NONE) {
+                        if (mSectionTextShowOnlyCertainValues == NONE || mSectionTextShowOnlyCertainValues == ALL) {
                             String text = sectionTextMap == null || sectionTextMap.get(mapPosition) == null ? (isFloatType ? float2String(m) : (int) m + "") : sectionTextMap.get(mapPosition);
                             canvas.drawText(text, x_, y_, mPaint);
-                        } else if (mThumbTextShowSetting == ONLY_DEFAULT) {
+                        } else if (mSectionTextShowOnlyCertainValues == ONLY_DEFAULT) {
                             canvas.drawText(isFloatType ? float2String(m) : (int) m + "", x_, y_, mPaint);
-                        } else {
+                        } else if (mSectionTextShowOnlyCertainValues == ONLY_CUSTOM) {
                             String text = sectionTextMap == null || sectionTextMap.get(mapPosition) == null ? "" : sectionTextMap.get(mapPosition);
                             canvas.drawText(TextUtils.isEmpty(text) ? "" : text, x_, y_, mPaint);
                         }
@@ -1085,6 +1088,7 @@ public class BubbleSeekBar extends View {
         isHideBubble = builder.hideBubble;
         isShowSecondTrack = builder.showSecondTrack;
         sectionTextMap = builder.sectionTextMap;
+        mSectionTextShowOnlyCertainValues = builder.sectionTextShowOnlyCertainValues;
 
         initConfigByPriority();
         calculateRadiusOfBubble();
@@ -1138,6 +1142,7 @@ public class BubbleSeekBar extends View {
         mConfigBuilder.hideBubble = isHideBubble;
         mConfigBuilder.showSecondTrack = isShowSecondTrack;
         mConfigBuilder.sectionTextMap = sectionTextMap;
+        mConfigBuilder.sectionTextShowOnlyCertainValues = mSectionTextShowOnlyCertainValues;
 
         return mConfigBuilder;
     }

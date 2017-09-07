@@ -51,8 +51,8 @@ public class BubbleConfigBuilder {
     boolean hideBubble;
     boolean showSecondTrack;
     Map<Integer, String> sectionTextMap;
-    @BubbleSeekBar.SectionTextShowSetting
-    int sectionTextShowSetting;
+    @BubbleSeekBar.SectionTextShowOnlyCertainValues
+    int sectionTextShowOnlyCertainValues;
 
     private BubbleSeekBar mBubbleSeekBar;
 
@@ -159,8 +159,8 @@ public class BubbleConfigBuilder {
         return this;
     }
 
-    public BubbleConfigBuilder sectionTextShowSetting(@BubbleSeekBar.SectionTextShowSetting int setting) {
-        this.sectionTextShowSetting = setting;
+    public BubbleConfigBuilder sectionTextShowSetting(@BubbleSeekBar.SectionTextShowOnlyCertainValues int setting) {
+        this.sectionTextShowOnlyCertainValues = setting;
         return this;
     }
 
@@ -325,8 +325,8 @@ public class BubbleConfigBuilder {
         return sectionTextPosition;
     }
 
-    public int getSectionTextShowSetting() {
-        return sectionTextShowSetting;
+    public int getSectionTextShowOnlyCertainValues() {
+        return sectionTextShowOnlyCertainValues;
     }
 
     public int getSectionTextInterval() {

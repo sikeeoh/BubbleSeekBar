@@ -123,7 +123,7 @@
         app:bsb_second_track_color="@color/color_blue"
         app:bsb_section_count="5"
         app:bsb_section_text_position="below_section_mark"
-        app:bsb_section_text_show_setting="only_custom"
+        app:bsb_section_text_show_only_certain_values="only_custom"
         app:bsb_show_section_mark="true"
         app:bsb_show_section_text="true"
         app:bsb_show_thumb_text="true"

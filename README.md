@@ -1,4 +1,4 @@
-[![Download](https://api.bintray.com/packages/sikeeoh/maven/bubbleseekbar/images/download.svg?version=3.7.1)](https://bintray.com/sikeeoh/maven/bubbleseekbar)
+[![Download](https://api.bintray.com/packages/sikeeoh/maven/bubbleseekbar/images/download.svg?version=3.7.2)](https://bintray.com/sikeeoh/maven/bubbleseekbar)
 [![License](http://img.shields.io/badge/License-Apache%202.0-brightgreen.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 
 # BubbleSeekBar for Android Renewal!
@@ -16,6 +16,7 @@ The project provides flexibility in customization in addition to adding brand ne
 * The string shown according to the section text attribute are different.
 	* bsb\_section\_text\_show\_setting (xml)
 	* sectionTextShowSetting(BubbleSeekBar.SectionTextShowSetting.ONLY\_CUSTOM) (java)
+* Fixed a bug where the Section Text Visiblity attribute was sometimes not applied.
 
 ## Introduce
 
@@ -56,7 +57,7 @@ The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/sikeeoh/ma
     app:bsb_show_section_mark="true"
     app:bsb_show_section_text="true"
     app:bsb_show_thumb_text="true"
-    app:bsb_section_text_show_setting="only_default"
+    app:bsb_section_text_show_only_certain_values="only_default"
     app:bsb_track_color="@color/color_red_light"/>
 ```
 ```xml
@@ -70,7 +71,7 @@ The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/sikeeoh/ma
     app:bsb_section_text_position="below_section_mark"
     app:bsb_show_section_mark="true"
     app:bsb_show_section_text="true"
-    app:bsb_section_text_show_setting="only_custom"
+    app:bsb_section_text_show_only_certain_values="only_custom"
     app:bsb_show_thumb_text="true"
     app:bsb_thumb_text_size="18sp"
     app:bsb_touch_to_seek="true"/>
@@ -151,10 +152,11 @@ Check out the demo for more details. Or download the apk: [**sample.apk**](https
     <enum name="below_section_mark" value="2"/>
 </attr>
 <!-- the string shown according to the section text attribute are different.
-If you do not use this option, the entire data will be displayed. default: NONE  -->
-<attr name="bsb_section_text_show_setting">
-	<enum name="only_default" value="0"/>
-	<enum name="only_custom" value="1"/>
+If you do not use this option, the entire data will be displayed. default: NONE(ALL)  -->
+<attr name="bsb_section_text_show_only_certain_values">
+	<enum name="all" value="0"/>
+	<enum name="only_default" value="1"/>
+	<enum name="only_custom" value="2"/>
 </attr>
 <attr name="bsb_section_text_interval" format="integer"/> <!--the interval of two section-text, default: 1-->
 <attr name="bsb_show_thumb_text" format="boolean"/> <!--show real time progress-text under thumb or not, default: false-->
