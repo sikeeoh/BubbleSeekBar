@@ -1,4 +1,4 @@
-[![Download](https://api.bintray.com/packages/sikeeoh/maven/bubbleseekbar/images/download.svg?version=3.7.2)](https://bintray.com/sikeeoh/maven/bubbleseekbar)
+[![Download](https://api.bintray.com/packages/sikeeoh/maven/bubbleseekbar/images/download.svg)](https://bintray.com/sikeeoh/maven/bubbleseekbar)
 [![License](http://img.shields.io/badge/License-Apache%202.0-brightgreen.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 
 # BubbleSeekBar for Android Renewal!
@@ -14,8 +14,8 @@ The project provides flexibility in customization in addition to adding brand ne
 	* showSecondTrack (java)
 	* hideSecondTrack (java)
 * The string shown according to the section text attribute are different.
-	* bsb\_section\_text\_show\_setting (xml)
-	* sectionTextShowSetting(BubbleSeekBar.SectionTextShowSetting.ONLY\_CUSTOM) (java)
+	* bsb\_section\_text\_show\_only\_certain\_values (xml)
+	* sectionTextShowOnlyCertainValues(BubbleSeekBar.SectionTextShowOnlyCertainValues.ONLY\_CUSTOM) (java)
 * Fixed a bug where the Section Text Visiblity attribute was sometimes not applied.
 
 ## Introduce

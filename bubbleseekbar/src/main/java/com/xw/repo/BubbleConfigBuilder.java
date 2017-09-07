@@ -159,7 +159,7 @@ public class BubbleConfigBuilder {
         return this;
     }
 
-    public BubbleConfigBuilder sectionTextShowSetting(@BubbleSeekBar.SectionTextShowOnlyCertainValues int setting) {
+    public BubbleConfigBuilder sectionTextShowOnlyCertainValues(@BubbleSeekBar.SectionTextShowOnlyCertainValues int setting) {
         this.sectionTextShowOnlyCertainValues = setting;
         return this;
     }
