@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def VERSION_NAME = "3.7.3"
+def VERSION_NAME = "3.7.4"
 
 android {
     compileSdkVersion 26
